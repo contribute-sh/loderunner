@@ -1,25 +1,44 @@
-import type { LevelData, SpawnPoint } from "../level/types";
+import type { BrickTimers, SpawnPoint, TileType } from "../level/types";
+
+export enum EnemyMovementState {
+  IDLE = "IDLE",
+  RUNNING = "RUNNING",
+  CLIMBING = "CLIMBING",
+  FALLING = "FALLING",
+}
+
+export interface EnemyState extends SpawnPoint {
+  movementState: EnemyMovementState;
+  isTrappedInHole: boolean;
+  trappedTimerMs: BrickTimers["regenDelayMs"];
+}
+
+export interface DugHole extends SpawnPoint {
+  regenRemainingMs: BrickTimers["regenDelayMs"];
+  originalTile: TileType;
+}
+
+export interface HiddenLadderState extends SpawnPoint {
+  revealed: boolean;
+}
+
+export enum LevelCompletionStatus {
+  IN_PROGRESS = "IN_PROGRESS",
+  ALL_GOLD_COLLECTED = "ALL_GOLD_COLLECTED",
+  COMPLETED = "COMPLETED",
+}
+
+export interface PlayerState extends SpawnPoint {
+  isAlive: boolean;
+}
 
 export interface GameState {
-  levelData: LevelData;
-  playerPosition: SpawnPoint;
+  player: PlayerState;
+  enemies: EnemyState[];
+  dugHoles: DugHole[];
+  hiddenLadders: HiddenLadderState[];
+  goldRemaining: number;
   score: number;
-  collectedGold: Set<string>;
-  isRunning: boolean;
-}
-
-export interface InputState {
-  heldKeys: Set<string>;
-  readAndClearSnapshot: () => Set<string>;
-}
-
-export interface LoopConfig {
-  fixedTimestepMs: number;
-  maxFrameSkip: number;
-}
-
-export interface FrameTiming {
-  deltaTime: number;
-  accumulator: number;
-  lastTimestamp: number;
+  completionStatus: LevelCompletionStatus;
+  levelName: string;
 }
