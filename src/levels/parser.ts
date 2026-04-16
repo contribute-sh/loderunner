@@ -29,7 +29,7 @@ const TILE_TYPES = {
 } as const;
 
 function assertNonEmptyInput(input: string | null | undefined): string {
-  if (input == null || input.trim() === "") {
+  if (input == null || input === "") {
     throw new Error("Level input is empty");
   }
 
@@ -37,7 +37,13 @@ function assertNonEmptyInput(input: string | null | undefined): string {
 }
 
 function parseRows(input: string): string[] {
-  return input.replace(/\r\n/g, "\n").replace(/\n+$/, "").split("\n");
+  const rows = input.replace(/\r\n?/g, "\n").split("\n");
+
+  while (rows.length > 0 && rows[rows.length - 1] === "") {
+    rows.pop();
+  }
+
+  return rows;
 }
 
 function createCoordinate(row: number, col: number): LevelCoordinate {
@@ -134,8 +140,6 @@ export function parseAsciiLevel(input: string | null | undefined): ParsedLevel {
 export function parseJsonLevel(input: string | null | undefined): ParsedLevel {
   const json = assertNonEmptyInput(input);
   const parsed = JSON.parse(json) as {
-    rows?: unknown;
-    cols?: unknown;
     tiles?: unknown;
   };
 
