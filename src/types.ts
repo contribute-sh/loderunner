@@ -1,6 +1,5 @@
-import type { LevelData as BaseLevelData, TileType } from "./level/types";
+import type { TileType } from "./level/types";
 
-export { TileType } from "./level/types";
 export type { BrickTimers, LevelCell, SpawnPoint } from "./level/types";
 
 export interface TileSpriteMapping {
@@ -15,11 +14,6 @@ export interface CharacterSpriteMapping {
   falling: string;
   digging: string;
 }
-
-/**
- * @deprecated Import `LevelData` from `src/level/types.ts` instead.
- */
-export type LevelData = BaseLevelData;
 
 export interface RenderConfig {
   tileSize: number;
