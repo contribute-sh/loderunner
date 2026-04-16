@@ -45,6 +45,10 @@ function createCoordinate(row: number, col: number): LevelCoordinate {
 }
 
 function classifyTiles(tiles: string[]): ParsedLevel {
+  if (tiles.length === 0) {
+    throw new Error("Level input is empty");
+  }
+
   const rows = tiles.length;
   const cols = tiles[0]?.length ?? 0;
   const empty: LevelCoordinate[] = [];
@@ -129,11 +133,23 @@ export function parseAsciiLevel(input: string | null | undefined): ParsedLevel {
 
 export function parseJsonLevel(input: string | null | undefined): ParsedLevel {
   const json = assertNonEmptyInput(input);
-  const parsed = JSON.parse(json) as { tiles?: unknown };
+  const parsed = JSON.parse(json) as {
+    rows?: unknown;
+    cols?: unknown;
+    tiles?: unknown;
+  };
 
   if (!Array.isArray(parsed.tiles) || parsed.tiles.length === 0) {
     throw new Error("Level input is empty");
   }
 
-  return classifyTiles(parsed.tiles.map((tile) => String(tile)));
+  return classifyTiles(
+    parsed.tiles.map((tile) => {
+      if (typeof tile !== "string") {
+        throw new Error("Invalid row length");
+      }
+
+      return tile;
+    }),
+  );
 }
