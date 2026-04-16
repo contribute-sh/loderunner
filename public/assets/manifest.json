@@ -1,0 +1,80 @@
+{
+  "spriteSheets": {
+    "player": {
+      "imageUrl": "assets/sprites/player.png",
+      "frameWidth": 32,
+      "frameHeight": 32,
+      "columns": 4,
+      "rows": 4
+    },
+    "tiles": {
+      "imageUrl": "assets/sprites/tiles.png",
+      "frameWidth": 32,
+      "frameHeight": 32,
+      "columns": 8,
+      "rows": 8
+    }
+  },
+  "animations": {
+    "player-run": {
+      "name": "player-run",
+      "frames": [
+        {
+          "frameIndex": 4,
+          "durationMs": 100
+        },
+        {
+          "frameIndex": 5,
+          "durationMs": 100
+        },
+        {
+          "frameIndex": 6,
+          "durationMs": 100
+        },
+        {
+          "frameIndex": 7,
+          "durationMs": 100
+        }
+      ]
+    },
+    "player-idle": {
+      "name": "player-idle",
+      "frames": [
+        {
+          "frameIndex": 0,
+          "durationMs": 250
+        },
+        {
+          "frameIndex": 1,
+          "durationMs": 250
+        }
+      ]
+    }
+  },
+  "audioCues": {
+    "dig": {
+      "id": "dig",
+      "srcUrl": "assets/audio/dig.mp3",
+      "volume": 0.7,
+      "loop": false
+    },
+    "collect-gold": {
+      "id": "collect-gold",
+      "srcUrl": "assets/audio/collect-gold.mp3",
+      "volume": 0.8,
+      "loop": false
+    },
+    "level-complete": {
+      "id": "level-complete",
+      "srcUrl": "assets/audio/level-complete.mp3",
+      "volume": 0.9,
+      "loop": false
+    },
+    "enemy-trap": {
+      "id": "enemy-trap",
+      "srcUrl": "assets/audio/enemy-trap.mp3",
+      "volume": 0.75,
+      "loop": false
+    }
+  }
+}
