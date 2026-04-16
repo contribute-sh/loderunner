@@ -22,6 +22,8 @@ export interface HiddenLadderState extends SpawnPoint {
   revealed: boolean;
 }
 
+export type GoldKey = `${SpawnPoint["row"]},${SpawnPoint["col"]}`;
+
 export enum LevelCompletionStatus {
   IN_PROGRESS = "IN_PROGRESS",
   ALL_GOLD_COLLECTED = "ALL_GOLD_COLLECTED",
@@ -37,7 +39,12 @@ export interface GameState {
   enemies: EnemyState[];
   dugHoles: DugHole[];
   hiddenLadders: HiddenLadderState[];
+  collectedGold: Set<string>;
+  totalGold: number;
   goldRemaining: number;
+  allGoldCollected: boolean;
+  levelComplete: boolean;
+  exitRowThreshold: number;
   score: number;
   completionStatus: LevelCompletionStatus;
   levelName: string;
