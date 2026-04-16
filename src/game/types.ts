@@ -1,4 +1,4 @@
-import type { BrickTimers, SpawnPoint, TileType } from "../level/types";
+import type { BrickTimers, LevelData, SpawnPoint, TileType } from "../level/types";
 
 export enum EnemyMovementState {
   IDLE = "IDLE",
@@ -35,10 +35,14 @@ export interface PlayerState extends SpawnPoint {
 }
 
 export interface GameState {
+  levelData: LevelData;
+  playerPosition: SpawnPoint;
+  enemyPositions: SpawnPoint[];
+  isRunning: boolean;
   player: PlayerState;
   enemies: EnemyState[];
   dugHoles: DugHole[];
-  hiddenLadders: HiddenLadderState[];
+  hiddenLadders: SpawnPoint[];
   collectedGold: Set<string>;
   totalGold: number;
   goldRemaining: number;
