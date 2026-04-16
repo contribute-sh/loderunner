@@ -1,19 +1,12 @@
-export enum TileType {
-  EMPTY = "EMPTY",
-  BRICK = "BRICK",
-  LADDER = "LADDER",
-  BAR = "BAR",
-  GOLD = "GOLD",
-  SPAWN_PLAYER = "SPAWN_PLAYER",
-  SPAWN_ENEMY = "SPAWN_ENEMY",
-}
+import { TileType } from "./level/types";
 
-export interface LevelData {
-  name: string;
-  width: number;
-  height: number;
-  tiles: TileType[][];
-}
+export { TileType } from "./level/types";
+export type {
+  BrickTimers,
+  LevelCell,
+  LevelData,
+  SpawnPoint,
+} from "./level/types";
 
 export interface RenderConfig {
   tileSize: number;
