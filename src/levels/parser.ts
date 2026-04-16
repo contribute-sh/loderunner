@@ -131,6 +131,39 @@ function classifyTiles(tiles: string[]): ParsedLevel {
   };
 }
 
+function parseJsonRows(input: string): string[] {
+  const parsed = JSON.parse(input) as {
+    rows?: unknown;
+    cols?: unknown;
+    tiles?: unknown;
+  };
+
+  if (!Array.isArray(parsed.tiles) || parsed.tiles.length === 0) {
+    throw new Error("Level input is empty");
+  }
+
+  const tiles = parsed.tiles.map((tile) => {
+    if (typeof tile !== "string") {
+      throw new Error("Invalid row length");
+    }
+
+    return tile;
+  });
+
+  if (parsed.rows !== undefined && parsed.rows !== tiles.length) {
+    throw new Error("Invalid row length");
+  }
+
+  if (
+    parsed.cols !== undefined &&
+    tiles.some((row) => row.length !== parsed.cols)
+  ) {
+    throw new Error("Invalid row length");
+  }
+
+  return tiles;
+}
+
 export function parseAsciiLevel(input: string | null | undefined): ParsedLevel {
   const ascii = assertNonEmptyInput(input);
 
@@ -139,21 +172,6 @@ export function parseAsciiLevel(input: string | null | undefined): ParsedLevel {
 
 export function parseJsonLevel(input: string | null | undefined): ParsedLevel {
   const json = assertNonEmptyInput(input);
-  const parsed = JSON.parse(json) as {
-    tiles?: unknown;
-  };
 
-  if (!Array.isArray(parsed.tiles) || parsed.tiles.length === 0) {
-    throw new Error("Level input is empty");
-  }
-
-  return classifyTiles(
-    parsed.tiles.map((tile) => {
-      if (typeof tile !== "string") {
-        throw new Error("Invalid row length");
-      }
-
-      return tile;
-    }),
-  );
+  return classifyTiles(parseJsonRows(json));
 }
